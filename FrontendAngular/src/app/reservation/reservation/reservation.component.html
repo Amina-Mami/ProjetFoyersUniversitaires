@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Réserver une chambre</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome CSS -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      rel="stylesheet"
+    />
+    <!-- Angular 13 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular/13.0.0/angular.min.js"></script>
+    <!-- Your Angular specific scripts -->
+    <script src="app.js"></script>
+    <style>
+      .main {
+        padding: 20px 0;
+      }
+
+      .card {
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-top: 20px; /* Espace mt de la carte */
+      }
+
+      .card-title {
+        color: #53a0b8;
+        font-size: 1.3rem;
+        font-weight: bold;
+        margin-bottom: 30px;
+        text-align: center;
+      }
+
+      .form-group label {
+        font-weight: bold;
+      }
+
+      .btn-primary {
+        background-color: #53a0b8; /* Nouvelle couleur de fond */
+        border-color: #53a0b8; /* Nouvelle couleur de bordure */
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+        width: auto; /* Taille du bouton small */
+        padding: 10px 20px; /* Espacement du bouton */
+        font-size: 1rem; /* Taille de police */
+      }
+
+      .btn-primary:hover {
+        background-color: #218838; /* Couleur au survol */
+        border-color: #218838; /* Bordure au survol */
+      }
+
+      .back-to-top {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 40px;
+        height: 40px;
+        background-color: #007bff;
+        color: #fff;
+        font-size: 24px;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 40px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        display: none;
+        transition: background-color 0.3s ease;
+      }
+
+      .back-to-top:hover {
+        background-color: #0056b3;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Replace with Angular component selectors -->
+    <app-header></app-header>
+    <app-menu></app-menu>
+
+    <main id="main" class="main">
+      <section class="section">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-8">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Réserver une chambre</h5>
+                  <!-- Angular form -->
+                  <form
+                    (ngSubmit)="submitReservationForm()"
+                    #reservationForm="ngForm"
+                  >
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="etudiant">Étudiant</label>
+                          <select
+                            class="form-control"
+                            name="etudiant"
+                            [(ngModel)]="reservation.etudiant"
+                          >
+                            <option
+                              *ngFor="let etudiant of etudiants"
+                              [value]="etudiant.id"
+                            >
+                              {{ etudiant.nomEtudiant }}
+                              {{ etudiant.prenomEtudiant }}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="universite">Université</label>
+                          <select
+                            class="form-control"
+                            id="universite"
+                            name="universite"
+                            [(ngModel)]="reservation.universite"
+                            (change)="onUniversiteChange()"
+                          >
+                            <option
+                              *ngFor="let universite of universites"
+                              [value]="universite.idUniversite"
+                            >
+                              {{ universite.nomUniversite }}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="foyer">Foyer</label>
+                          <select
+                            class="form-control"
+                            id="foyer"
+                            name="foyer"
+                            [(ngModel)]="reservation.foyer"
+                            (change)="onFoyerChange()"
+                          >
+                            <option
+                              *ngFor="let foyer of foyers"
+                              [value]="foyer.idFoyer"
+                            >
+                              {{ foyer.nomFoyer }}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="bloc">Bloc</label>
+                          <select
+                            class="form-control"
+                            id="bloc"
+                            name="bloc"
+                            [(ngModel)]="reservation.bloc"
+                          >
+                            <option
+                              *ngFor="let bloc of blocs"
+                              [value]="bloc.id"
+                            >
+                              {{ bloc.nomBloc }}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="chambre">Chambre</label>
+                          <select
+                            class="form-control"
+                            id="chambre"
+                            name="chambre"
+                            [(ngModel)]="reservation.chambre"
+                          >
+                            <option
+                              *ngFor="let chambre of chambres"
+                              [value]="chambre.id"
+                            >
+                              {{ chambre.nom }}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="col-12">
+                        <div class="text-center">
+                          <button type="submit" class="btn btn-primary btn-sm">
+                            Réserver
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                  <!-- End Angular form -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Replace with Angular component selector -->
+    <app-footer></app-footer>
+
+    <!-- Back to top button -->
+    <a
+      href="#"
+      class="back-to-top d-flex align-items-center justify-content-center"
+    >
+      <i class="bi bi-arrow-up-short"></i>
+    </a>
+
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Font Awesome JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+  </body>
+</html>

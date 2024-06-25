@@ -1,0 +1,44 @@
+<app-header></app-header>
+<app-menu></app-menu>
+
+<main id="main" class="main">
+<div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Modifier Universite</h5>
+
+              <form class="row g-3" (ngSubmit)="updateUniversite()" [formGroup]="BlocForm">
+                <div class="col-md-12">
+                  <label for="inputName5" class="form-label">Nom de l'universite :</label>
+                  <input type="text" class="form-control" formControlName="nomUniversite">
+                  <div *ngIf="validateField('nomUniversite')" class="error-message">
+                    {{ getErrorMessage('nomUniversite') }}
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label for="inputAddress5" class="form-label">Adresse :</label>
+                  <input type="text" class="form-control" formControlName="adresse">
+                  <div *ngIf="validateField('adresse')" class="error-message">
+                    {{ getErrorMessage('adresse') }}
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <label for="inputFoyer" class="form-label">Foyer :</label>
+                  <select formControlName="Foyer" [(ngModel)]="BlocForm.value.Foyer">
+                    <option value="">Sélectionnez un foyer</option>
+                    <option *ngFor="let foyer of foyers" [value]="foyer.idFoyer">{{ foyer.nomFoyer }}</option>
+                  </select>
+                  <div *ngIf="validateField('foyer')" class="error-message">
+                    {{ getErrorMessage('foyer') }}
+                  </div>
+                </div>
+                        
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary">Update</button>
+                </div>
+              </form><!-- End Multi Columns Form -->
+
+            </div>
+          
+</div>
+</main>
+<app-footer></app-footer>

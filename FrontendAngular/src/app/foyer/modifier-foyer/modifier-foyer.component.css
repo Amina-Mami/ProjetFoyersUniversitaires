@@ -1,0 +1,80 @@
+.btn {
+   
+    color: black;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    width: 25%;
+    margin-bottom:10px;
+    opacity: 0.8;
+    width: 120px;
+    height: 50px;
+    font-size: 18px;
+  }
+
+  /* styles.css or styles.scss */
+.form-container {
+  max-width: 400px;
+height: 400px;
+ 
+  padding: 20px;
+  border: 1px solid #e73f3f;
+  border-radius: 8px;
+
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #333;
+}
+
+.input-field {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.alert-danger {
+  color: #d9534f;
+  margin-top: 5px;
+}
+
+button {
+  background-color: #5cb85c;
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button:hover {
+  background-color: #4cae4c;
+}
+
+/* styles.css ou styles.scss */
+.mat-dialog-container + div.mat-overlay {
+  background-color: rgba(0, 0, 0, 0.6); /* Opacité du fond désactivé */
+}
+
+/* styles.css ou styles.scss */
+
+/* Ajoutez une règle pour le fond flou pendant l'affichage d'un dialogue */
+.cdk-overlay-container {
+  filter: blur(5px); /* Ajustez la quantité de flou selon vos préférences */
+  pointer-events: none; /* Permet aux événements de se propager à travers l'arrière-plan */
+}
+
+/* Désactivez le flou après la fermeture du dialogue */
+.mat-dialog-container {
+  filter: none;
+}

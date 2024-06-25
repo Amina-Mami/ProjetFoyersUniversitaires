@@ -1,0 +1,14 @@
+.dialog{
+    background: rgb(125, 144, 167); 
+    color: #ffffff; 
+    border-radius: 4px; 
+   
+}
+
+.mat-dialog-title{
+    background: rgb(125, 144, 167); 
+    color: #ffffff; 
+}
+.h4{
+    margin-top: 30px;
+}

@@ -1,0 +1,94 @@
+<form
+  class="form-container"
+  [formGroup]="foyerForm"
+  (ngSubmit)="modifierFoyer()"
+>
+  <label for="nomFoyer">Nom Foyer</label>
+  <input
+    type="text"
+    class="form-control"
+    id="nomFoyer"
+    formControlName="nomFoyer"
+  />
+  <div
+    *ngIf="
+      foyerForm.get('nomFoyer')?.hasError('required') &&
+      foyerForm.get('nomFoyer')?.touched
+    "
+    class="text-danger"
+  >
+    Ce champ est obligatoire
+  </div>
+  <div
+    *ngIf="foyerForm.get('nomFoyer')?.hasError('minlength')"
+    class="text-danger"
+  >
+    Le nom doit contenir au moins 3 caractères.
+  </div>
+
+  <div class="form-group">
+    <label for="capaciteFoyer">Capacité </label>
+    <input
+      type="number"
+      class="form-control"
+      id="capaciteFoyer"
+      formControlName="capaciteFoyer"
+    />
+    <div
+      *ngIf="
+        foyerForm.get('capaciteFoyer')?.hasError('required') &&
+        foyerForm.get('capaciteFoyer')?.touched
+      "
+      class="text-danger"
+    >
+      Ce champ est obligatoire
+    </div>
+    <div
+      *ngIf="
+        foyerForm.get('capaciteFoyer')?.hasError('pattern') &&
+        foyerForm.get('capaciteFoyer')?.touched
+      "
+      class="text-danger"
+    >
+      Ce champ contient que des chiffres
+    </div>
+    <div
+      *ngIf="
+        foyerForm.get('capaciteFoyer')?.hasError('min') &&
+        foyerForm.get('capaciteFoyer')?.touched
+      "
+      class="text-danger"
+    >
+      La capacité doit être au moins 100
+    </div>
+    <div
+      *ngIf="
+        foyerForm.get('capaciteFoyer')?.hasError('max') &&
+        foyerForm.get('capaciteFoyer')?.touched
+      "
+      class="text-danger"
+    >
+      La capacité ne peut pas dépasser 600
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="universite">Université</label>
+    <select
+      class="form-control"
+      id="universite"
+      name="universite"
+      required
+      formControlName="universite"
+    >
+      <option *ngFor="let universite of universites" [ngValue]="universite">
+        {{ universite.nomUniversite }}
+      </option>
+    </select>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Modifier</button>
+  <button type="button" class="btn btn-danger" (click)="annulerModification()">
+    Annuler
+  </button>
+</form>

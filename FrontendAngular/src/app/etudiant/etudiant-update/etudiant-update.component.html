@@ -1,0 +1,72 @@
+<app-header></app-header>
+<app-menu></app-menu>
+<script src="https://kit.fontawesome.com/941eee4760.js" crossorigin="anonymous"></script>
+
+<main id="main" class="main">
+    <div class="row">
+        <div class="card col-md-6 offset-md-3 offset-md-3">
+            <div class="row">
+                <h3 class="text-center"> Update Etudiant </h3>
+                <hr />
+                <div class="card-body">
+                    <form [formGroup]="etudiantForm" (ngSubmit)="onSubmit()">
+
+                        <div class="form-group">
+                            <label> Nom</label>
+                            <input type="text" class="form-control" formControlName="nomEt">
+                            <div *ngIf="etudiantForm.get('nomEt')?.hasError('required') && etudiantForm.get('nomEt')?.touched" class="text-danger">
+                                Le champ Nom est requis.
+                            </div>
+                            <div *ngIf="etudiantForm.get('nomEt')?.hasError('minlength') && etudiantForm.get('nomEt')?.touched" class="text-danger">
+                                Le champ Nom doit avoir au moins 2 caractères.
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label> Prenom</label>
+                            <input type="text" class="form-control" formControlName="prenomEt">
+                            <div *ngIf="etudiantForm.get('prenomEt')?.hasError('required') && etudiantForm.get('prenomEt')?.touched" class="text-danger">
+                                Le champ Prenom est requis.
+                            </div>
+                            <div *ngIf="etudiantForm.get('prenomEt')?.hasError('minlength') && etudiantForm.get('prenomEt')?.touched" class="text-danger">
+                                Le champ Prenom doit avoir au moins 2 caractères.
+                            </div>
+                        </div>
+
+
+                     
+                        <div class="form-group">
+                            <label> Ecole</label>
+                            <input type="text" class="form-control" formControlName="ecole">
+                            <div *ngIf="etudiantForm.get('ecole')?.hasError('required') && etudiantForm.get('ecole')?.touched" class="text-danger">
+                                Le champ Ecole est requis.
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label> Cin</label>
+                            <input type="text" class="form-control" formControlName="cin">
+                            <div *ngIf="etudiantForm.get('cin')?.hasError('required') && etudiantForm.get('cin')?.touched" class="text-danger">
+                                <ng-container *ngIf="etudiantForm.get('cin')?.hasError('required')">Le champ Cin est requis.</ng-container>
+                                <ng-container *ngIf="etudiantForm.get('cin')?.hasError('pattern')">Le champ Cin doit avoir 8 chiffres.</ng-container>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label> Date de Naissance</label>
+                            <input type="text" class="form-control" formControlName="dateNaissance">
+                            <div *ngIf="etudiantForm.get('dateNaissance')?.hasError('required') && etudiantForm.get('dateNaissance')?.touched" class="text-danger">
+                                Le champ Date de Naissance est requis.
+                            </div>
+                        </div>
+                        <br />
+                        <button class="btn btn-success" type="submit">Submit</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<app-footer></app-footer>

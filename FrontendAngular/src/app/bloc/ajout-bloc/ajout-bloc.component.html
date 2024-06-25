@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+
+    <app-header></app-header>
+    <app-menu></app-menu>
+
+    <main id="main" class="main">
+
+        <div class="pagetitle">
+            <h1>Form Elements</h1>
+
+        </div><!-- End Page Title -->
+
+        <section class="section">
+            <div class="row">
+                <div class="col-lg-12">
+
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">General Form Elements</h5>
+
+                            <!-- General Form Elements -->
+                            <form (ngSubmit)="onSubmit()" [formGroup]="BlocForm">
+
+                                <div class="row mb-3">
+                                    <label for="inputNom" class="col-sm-2 col-form-label">Nom</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" formControlName="nomBloc">
+                                    </div>
+                                    <div *ngIf="validateField('nomBloc')" class="error-message">
+                                        {{ getErrorMessage('nomBloc') }}
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="inputCapaciteBloc" class="col-sm-2 col-form-label">Capacite Bloc</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" formControlName="capaciteBloc">
+                                    </div>
+                                    <div *ngIf="validateField('capaciteBloc')" class="error-message">
+                                        {{ getErrorMessage('capaciteBloc') }}
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="inputFoyer" class="col-sm-2 col-form-label">Foyer</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-select" aria-label="Default select example"
+                                            formControlName="Foyer">
+                                            <option *ngFor="let Foyer of Listfoyer" [value]="Foyer?.nomFoyer">
+                                                {{Foyer?.nomFoyer}}</option>
+
+
+                                        </select>
+                                    </div>
+                                    <div *ngIf="validateField('Foyer')" class="error-message">
+                                        {{ getErrorMessage('Foyer') }}
+                                    </div>
+
+                                </div>
+
+
+
+
+
+                                <div class="row mb-3">
+
+                                    <div class="col-sm-10">
+                                        <button type="submit" class="btn btn-primary">Ajouter</button>
+                                    </div>
+                                </div>
+
+
+                            </form><!-- End General Form Elements -->
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </section>
+
+    </main><!-- End #main -->
+
+    <app-footer></app-footer>
+
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
+
+
+</body>
+
+</html>

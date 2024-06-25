@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ListBlocs</title>
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      rel="stylesheet"
+    />
+    <!-- Replace with your Angular related scripts/styles -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular/13.0.0-beta.1/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-datatables/0.6.5/angular-datatables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- Angular specific scripts -->
+    <script src="app.js"></script>
+  </head>
+  <body>
+    <app-header></app-header>
+    <app-menu></app-menu>
+
+    <main id="main" class="main">
+      <section class="section">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="card">
+                <div class="card-body">
+                  <div
+                    class="d-flex justify-content-between align-items-center mb-3"
+                  >
+                    <input
+                      type="text"
+                      class="form-control w-25"
+                      [(ngModel)]="rechercheblocs"
+                      (input)="rechercheBlocs()"
+                      placeholder="Rechercher un bloc"
+                    />
+                    <div class="btn-group" role="group">
+                      <button
+                        class="btn btn-secondary mr-3"
+                        (click)="trierBlocs()"
+                      >
+                        <i class="fas fa-sort"></i> Trier par nom
+                      </button>
+                      <button class="btn btn-secondary" (click)="printBlocs()">
+                        <i class="fas fa-print"></i> Imprimer
+                      </button>
+                    </div>
+                  </div>
+                  <h5 class="card-title text-center mb-4">Liste des Blocs</h5>
+                  <div class="table-responsive">
+                    <table class="table table-hover">
+                      <thead class="table-dark">
+                        <tr>
+                          <th>Id Bloc</th>
+                          <th>Nom Bloc</th>
+                          <th>Capacité Bloc</th>
+                          <th>Foyer</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let bloc of listBlocs">
+                          <td>{{ bloc.idBloc }}</td>
+                          <td>{{ bloc.nomBloc }}</td>
+                          <td>{{ bloc.capaciteBloc }}</td>
+                          <td>{{ bloc?.foyer?.nomFoyer }}</td>
+                          <td>
+                            <a
+                              class="text-danger me-3"
+                              (click)="onDeleteBloc(bloc)"
+                            >
+                              <i class="fas fa-trash"></i>
+                            </a>
+                            <a
+                              class="text-primary"
+                              href="Bloc/ModifierBloc/{{ bloc.idBloc }}"
+                            >
+                              <i class="fas fa-pen"></i>
+                            </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <app-footer></app-footer>
+
+    <a
+      href="#"
+      class="back-to-top d-flex align-items-center justify-content-center"
+    >
+      <i class="bi bi-arrow-up-short"></i>
+    </a>
+
+    <!-- External scripts -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+  </body>
+</html>

@@ -1,0 +1,65 @@
+<app-header></app-header>
+<app-menu></app-menu>
+
+<div class="container">
+  <div class="card shadow-lg p-4">
+    <div class="card-body">
+      <h3 class="text-center mb-4">Ajouter une Université</h3>
+      <form [formGroup]="BlocForm" (ngSubmit)="addNewUniversite()" novalidate>
+        <div class="form-group mb-3">
+          <label for="nomUniversite" class="form-label"
+            >Nom de l'université</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="nomUniversite"
+            formControlName="nomUniversite"
+          />
+          <div *ngIf="validateField('nomUniversite')" class="text-danger">
+            {{ getErrorMessage("nomUniversite") }}
+          </div>
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="adresse" class="form-label">Adresse</label>
+          <input
+            type="text"
+            class="form-control"
+            id="adresse"
+            formControlName="adresse"
+          />
+          <div *ngIf="validateField('adresse')" class="text-danger">
+            {{ getErrorMessage("adresse") }}
+          </div>
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="foyer" class="form-label">Foyer</label>
+          <select class="form-control" id="foyer" formControlName="foyer">
+            <option value="" selected disabled>Choisissez un foyer</option>
+            <option *ngFor="let foyer of foyers" [value]="foyer.idFoyer">
+              {{ foyer.nomFoyer }}
+            </option>
+          </select>
+          <div *ngIf="validateField('foyer')" class="text-danger">
+            {{ getErrorMessage("foyer") }}
+          </div>
+        </div>
+
+        <div class="text-center">
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="!BlocForm.valid"
+          >
+            Ajouter
+          </button>
+          <button type="reset" class="btn btn-secondary">Reset</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

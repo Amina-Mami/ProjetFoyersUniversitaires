@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Liste des chambres</title>
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular/13.0.0-beta.1/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-datatables/0.6.5/angular-datatables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="app.js"></script>
+    <style>
+      /* Custom CSS for spacing */
+      .space-top {
+        margin-top: 20px; /* Adjust the top margin as needed */
+      }
+    </style>
+  </head>
+  <body>
+    <app-header></app-header>
+    <app-menu></app-menu>
+
+    <main id="main" class="main">
+      <section class="section">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="card">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-6 mt-2">
+                      <input
+                        [(ngModel)]="searchValue"
+                        name="searchValue"
+                        type="search"
+                        placeholder="Recherche..."
+                        class="form-control w-50"
+                        (keyup)="filterUpdate($event)"
+                        (search)="filterUpdate($event)"
+                      />
+                      <a class="search-btn"> </a>
+                    </div>
+                    <div class="col-6 text-right mt-2">
+                      <button
+                        class="btn btn-warning"
+                        (click)="openAddCertificateModal()"
+                      >
+                        <i
+                          class="fas fa-plus d-sm-none d-inline-block mr-0 mr-sm-1"
+                        ></i>
+                        <span class="d-none d-sm-inline-block"
+                          >Ajouter une chambre</span
+                        >
+                      </button>
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-md-12">
+                      <h5 class="card-title text-center space-top">
+                        Liste des chambres
+                      </h5>
+                    </div>
+                  </div>
+                  <!-- chambre.component.html -->
+
+                  <!-- Modal for adding/editing certificate -->
+                  <ng-template #addCertificateModal let-modal>
+                    <div class="modal-header">
+                      <h4 class="modal-title" id="modal-basic-title">
+                        {{
+                          isEditMode
+                            ? "Modifier la chambre"
+                            : "Ajouter une chambre"
+                        }}
+                      </h4>
+                      <button
+                        type="button"
+                        class="close"
+                        aria-label="Close"
+                        (click)="modal.dismiss()"
+                      >
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <!-- Form for adding/editing certificate -->
+                      <form
+                        [formGroup]="certificateForm"
+                        (ngSubmit)="onSubmit(modal)"
+                      >
+                        <div class="form-group">
+                          <label for="numeroChambre">Numéro Chambre</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="numeroChambre"
+                            formControlName="numeroChambre"
+                          />
+                        </div>
+                        <div class="form-group">
+                          <label for="type">Type</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="type"
+                            formControlName="type"
+                          />
+                        </div>
+                        <div class="form-group">
+                          <label for="virtualTourURL"
+                            >URL du tour virtuel</label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="virtualTourURL"
+                            formControlName="virtualTourURL"
+                          />
+                        </div>
+                        <div class="form-group">
+                          <label for="bloc">Bloc</label>
+                          <select
+                            class="form-control"
+                            id="bloc"
+                            formControlName="bloc"
+                          >
+                            <option
+                              *ngFor="let bloc of blocs"
+                              [value]="bloc.idBloc"
+                            >
+                              {{ bloc.nomBloc }}
+                            </option>
+                          </select>
+                        </div>
+                        <div class="modal-footer">
+                          <button
+                            type="button"
+                            class="btn btn-secondary"
+                            (click)="modal.dismiss()"
+                          >
+                            Fermer
+                          </button>
+                          <button type="submit" class="btn btn-primary">
+                            {{ isEditMode ? "Modifier" : "Ajouter" }}
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </ng-template>
+
+                  <ngx-datatable
+                    class="bootstrap core-bootstrap"
+                    [rows]="filteredRows"
+                    [headerHeight]="50"
+                    [footerHeight]="50"
+                    [rowHeight]="'auto'"
+                    [scrollbarH]="true"
+                  >
+                    <ngx-datatable-column
+                      name="Numéro chambre"
+                      prop="numeroChambre"
+                      [width]="200"
+                    >
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        <span>{{ row.numeroChambre }}</span>
+                      </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column name="Type" prop="type" [width]="200">
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        <span>{{ row.typeChambre }}</span>
+                      </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column name="Nom Bloc" [width]="150">
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        <span>{{ row.bloc?.nomBloc }}</span>
+                      </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column name="Capacité Bloc" [width]="150">
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        <span>{{ row.bloc?.capaciteBloc }}</span>
+                      </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column
+                      name="VR360"
+                      prop="virtualTourURL"
+                      [width]="100"
+                    >
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        <button
+                          type="button"
+                          class="btn btn-primary btn-sm icon-center"
+                          (click)="openEditModal(row, true)"
+                        >
+                          <i class="bi bi-eye"></i>
+                        </button>
+                      </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column
+                      name="Actions"
+                      [sortable]="false"
+                      [width]="100"
+                    >
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        <div class="row">
+                          <div class="col-5">
+                            <button
+                              type="button"
+                              class="btn btn-warning btn-sm"
+                              (click)="openEditModal(row, false)"
+                            >
+                              <i class="fa fa-pen"></i>
+                            </button>
+                          </div>
+                          <div class="col-5">
+                            <button
+                              type="button"
+                              class="btn btn-danger btn-sm"
+                              (click)="deleteFormation(row)"
+                            >
+                              <i class="fa fa-trash"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </ng-template>
+                    </ngx-datatable-column>
+                  </ngx-datatable>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <app-footer></app-footer>
+
+    <a
+      href="#"
+      class="back-to-top d-flex align-items-center justify-content-center"
+    >
+      <i class="bi bi-arrow-up-short"></i>
+    </a>
+
+    <!-- External scripts -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+  </body>
+</html>

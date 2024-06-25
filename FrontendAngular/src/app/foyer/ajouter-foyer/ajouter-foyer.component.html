@@ -1,0 +1,60 @@
+
+
+<!-- ajouter-foyer.component.html -->
+
+<form class="form-container " [formGroup]="FoyerForm" (ngSubmit)="onSubmit()" novalidate #form="ngForm">
+  <div class="form-group">
+    <label for="nomFoyer">Nom Foyer</label>
+    <input type="text" class="form-control" id="nomFoyer" formControlName="nomFoyer">
+    <div *ngIf="FoyerForm.get('nomFoyer')?.hasError('required') && FoyerForm.get('nomFoyer')?.touched" class="text-danger">
+      Ce champ est obligatoire
+    </div>
+    <div *ngIf="FoyerForm.get('nomFoyer')?.hasError('minlength')" class="text-danger">
+      Le nom doit contenir au moins 3 caractères.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="capaciteFoyer">Capacité </label>
+    <input type="number" class="form-control" id="capaciteFoyer" formControlName="capaciteFoyer">
+    <div *ngIf="FoyerForm.get('capaciteFoyer')?.hasError('required') && FoyerForm.get('capaciteFoyer')?.touched" class="text-danger">
+      Ce champ est obligatoire
+    </div>
+    <div *ngIf="FoyerForm.get('capaciteFoyer')?.hasError('pattern') && FoyerForm.get('capaciteFoyer')?.touched" class="text-danger">
+      Ce champ contient que des chiffres
+    </div>
+    <div *ngIf="FoyerForm.get('capaciteFoyer')?.hasError('min') && FoyerForm.get('capaciteFoyer')?.touched" class="text-danger">
+      La capacité doit être au moins 100
+    </div>
+    <div *ngIf="FoyerForm.get('capaciteFoyer')?.hasError('max') && FoyerForm.get('capaciteFoyer')?.touched" class="text-danger">
+      La capacité ne peut pas dépasser 600
+    </div>
+  </div>
+
+ 
+
+
+
+  <div class="form-group">
+    <label for="idUniversite">Université</label>
+    <select class="form-control" id="idUniversite" name="idUniversite" required formControlName="idUniversite">
+      <option *ngFor="let universite of universites" [value]="universite.idUniversite">{{ universite.nomUniversite }}</option>
+    </select>
+  </div>
+  
+ 
+  
+
+
+
+  <button type="submit" [disabled]="!FoyerForm.valid || messageAjout">Ajouter</button>
+  <button (click)="onAnnulerClick()" class="float-end">Annuler</button>
+
+</form>
+
+<div class="mt-4 bg-success" *ngIf="messageAjout" [class.message-ajout]="messageAjout.includes('succès')" [class.message-erreur]="messageAjout.includes('Erreur')">
+  {{ messageAjout }}
+</div>
+
+
+

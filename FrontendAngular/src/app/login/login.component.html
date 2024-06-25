@@ -1,0 +1,28 @@
+<!-- login.component.html -->
+
+<div class="login-container">
+    <div class="d-flex justify-content-end">
+        <img src="assets/login.png" alt="login" class="img-fluid float-end w-50 mr-3 mt-5">
+      </div>
+   
+    <div *ngIf="!authService.isAuthenticated()">
+    
+      <form (ngSubmit)="login()">
+        <div>
+          <label for="username" >Nom d'utilisateur:</label>
+          <input type="text" id="username" name="username" [(ngModel)]="username" required>
+        </div>
+        <div>
+          <label for="password">Mot de passe:</label>
+          <input type="password" id="password" name="password" [(ngModel)]="password" required>
+        </div>
+        <button type="submit">Se connecter</button>
+      </form>
+    </div>
+  
+    <div *ngIf="authService.isAuthenticated()">
+      <p>Vous êtes connecté!</p>
+      <button (click)="logout()">Se déconnecter</button>
+    </div>
+  </div>
+  
