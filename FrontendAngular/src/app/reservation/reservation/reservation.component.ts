@@ -19,6 +19,7 @@ export class ReservationComponent implements OnInit {
   foyers: any[] = [];
   blocs: any[] = [];
   chambres: any[] = [];
+  chambresFiltrees: any[] = [];
 
   constructor(private reservationService: ReservationService) {}
 
@@ -105,7 +106,18 @@ export class ReservationComponent implements OnInit {
       this.fetchBlocs();
     }
   }
-
+  onBlocChange() {
+    const selectedBlocId = this.reservation.bloc;
+    if (selectedBlocId) {
+      // Filtrer les chambres par le bloc sélectionné
+      this.chambresFiltrees = this.chambres.filter(
+        (chambre) => chambre.bloc === selectedBlocId && chambre.estValide
+      );
+    } else {
+      // Si aucun bloc n'est sélectionné, réinitialiser les chambres filtrées
+      this.chambresFiltrees = [];
+    }
+  }
   submitReservationForm() {
     console.log('Form submitted with data:', this.reservation);
     // Example: Call a service to submit data to a backend API

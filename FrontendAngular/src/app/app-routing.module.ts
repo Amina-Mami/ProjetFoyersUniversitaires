@@ -11,6 +11,7 @@ import { E404Component } from './e404/e404.component';
 import { ChambreComponent } from './chambre/chambre.component';
 import { FoyerRoutingModule } from './foyer/foyer-routing.module';
 import { BlocRoutingModule } from './bloc/bloc-routing.module';
+import { ListReservationComponent } from './reservation/list-reservation/list-reservation.component';
 import { ReservationComponent } from './reservation/reservation/reservation.component';
 
 const routes: Routes = [
@@ -19,7 +20,8 @@ const routes: Routes = [
   { path: 'Table', component: TableComponent },
   { path: 'Ajouter', component: AjoutComponent },
   { path: 'chambres', component: ChambreComponent },
-  { path: 'reservations', component: ReservationComponent },
+  { path: 'reservations/create', component: ReservationComponent },
+  { path: 'reservations', component: ListReservationComponent },
   { path: 'Modifier', component: ModifComponent },
   {
     path: 'etudiants',

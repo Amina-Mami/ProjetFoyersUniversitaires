@@ -11,16 +11,18 @@ import { ModifComponent } from './modif/modif.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginComponent } from './login/login.component';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule,ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { LayoutComponentComponent } from './layout-component/layout-component.component';
 import { E404Component } from './e404/e404.component';
-import {ChambreComponent} from "./chambre/chambre.component";
-import {NgxDatatableModule} from "@swimlane/ngx-datatable";
-import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
+import { ChambreComponent } from './chambre/chambre.component';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ReservationComponent } from './reservation/reservation/reservation.component';
-
+import { ListReservationComponent } from './reservation/list-reservation/list-reservation.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Import BrowserAnimationsModule or NoopAnimationsModule
 
 @NgModule({
   declarations: [
@@ -37,27 +39,24 @@ import { ReservationComponent } from './reservation/reservation/reservation.comp
     E404Component,
     ChambreComponent,
     ReservationComponent,
-
+    ListReservationComponent,
   ],
-  exports: [
-    HeaderComponent,
-    MenuComponent,
-    FooterComponent,
-  ],
+  exports: [HeaderComponent, MenuComponent, FooterComponent],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
-    
+
     FormsModule,
     ReactiveFormsModule,
     NgxPaginationModule,
     NgxDatatableModule,
     NgbModule,
-    MatDialogModule
-    ],
+    MatDialogModule,
+    MatSnackBarModule,
+  ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule {
-}
+export class AppModule {}

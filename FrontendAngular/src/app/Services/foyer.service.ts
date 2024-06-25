@@ -78,7 +78,8 @@ export class FoyerService {
   }
 
   getUniversites(): Observable<Universite[]> {
-    const universiteApiUrl = 'http://localhost:8081/foyer/api/universites/all';
+    const universiteApiUrl =
+      'http://localhost:8081/foyer/api/universites/getAll';
     return this.http.get<Universite[]>(universiteApiUrl).pipe(
       tap((data) => console.log("Données d'universités:", data)),
       catchError(this.handleError<Universite[]>('getUniversites', []))

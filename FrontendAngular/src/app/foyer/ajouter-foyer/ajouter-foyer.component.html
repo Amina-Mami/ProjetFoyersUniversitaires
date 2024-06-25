@@ -1,60 +1,76 @@
+<app-header></app-header>
+<app-menu></app-menu>
 
+<div class="container">
+  <div class="card shadow-lg p-4">
+    <div class="card-body">
+      <h3 class="text-center mb-4">Ajouter un Foyer</h3>
+      <form [formGroup]="FoyerForm" (ngSubmit)="onSubmit()" novalidate>
+        <div class="form-group mb-3">
+          <label for="nomFoyer" class="form-label">Nom du foyer</label>
+          <input
+            type="text"
+            class="form-control"
+            id="nomFoyer"
+            formControlName="nomFoyer"
+          />
+          <div *ngIf="validateField('nomFoyer')" class="text-danger">
+            {{ getErrorMessage("nomFoyer") }}
+          </div>
+        </div>
 
-<!-- ajouter-foyer.component.html -->
+        <div class="form-group mb-3">
+          <label for="capaciteFoyer" class="form-label"
+            >Capacité du foyer</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            id="capaciteFoyer"
+            formControlName="capaciteFoyer"
+          />
+          <div *ngIf="validateField('capaciteFoyer')" class="text-danger">
+            {{ getErrorMessage("capaciteFoyer") }}
+          </div>
+        </div>
 
-<form class="form-container " [formGroup]="FoyerForm" (ngSubmit)="onSubmit()" novalidate #form="ngForm">
-  <div class="form-group">
-    <label for="nomFoyer">Nom Foyer</label>
-    <input type="text" class="form-control" id="nomFoyer" formControlName="nomFoyer">
-    <div *ngIf="FoyerForm.get('nomFoyer')?.hasError('required') && FoyerForm.get('nomFoyer')?.touched" class="text-danger">
-      Ce champ est obligatoire
-    </div>
-    <div *ngIf="FoyerForm.get('nomFoyer')?.hasError('minlength')" class="text-danger">
-      Le nom doit contenir au moins 3 caractères.
+        <div class="form-group mb-3">
+          <label for="idUniversite" class="form-label">Université</label>
+          <select
+            class="form-control"
+            id="idUniversite"
+            formControlName="idUniversite"
+          >
+            <option value="" disabled selected>
+              Choisissez une université
+            </option>
+            <option
+              *ngFor="let universite of universites"
+              [value]="universite.idUniversite"
+            >
+              {{ universite.nomUniversite }}
+            </option>
+          </select>
+          <div *ngIf="validateField('idUniversite')" class="text-danger">
+            {{ getErrorMessage("idUniversite") }}
+          </div>
+        </div>
+
+        <div class="text-center">
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="!FoyerForm.valid"
+          >
+            Ajouter
+          </button>
+          <button type="button" class="btn btn-secondary" (click)="onReset()">
+            Reset
+          </button>
+        </div>
+      </form>
     </div>
   </div>
-
-  <div class="form-group">
-    <label for="capaciteFoyer">Capacité </label>
-    <input type="number" class="form-control" id="capaciteFoyer" formControlName="capaciteFoyer">
-    <div *ngIf="FoyerForm.get('capaciteFoyer')?.hasError('required') && FoyerForm.get('capaciteFoyer')?.touched" class="text-danger">
-      Ce champ est obligatoire
-    </div>
-    <div *ngIf="FoyerForm.get('capaciteFoyer')?.hasError('pattern') && FoyerForm.get('capaciteFoyer')?.touched" class="text-danger">
-      Ce champ contient que des chiffres
-    </div>
-    <div *ngIf="FoyerForm.get('capaciteFoyer')?.hasError('min') && FoyerForm.get('capaciteFoyer')?.touched" class="text-danger">
-      La capacité doit être au moins 100
-    </div>
-    <div *ngIf="FoyerForm.get('capaciteFoyer')?.hasError('max') && FoyerForm.get('capaciteFoyer')?.touched" class="text-danger">
-      La capacité ne peut pas dépasser 600
-    </div>
-  </div>
-
- 
-
-
-
-  <div class="form-group">
-    <label for="idUniversite">Université</label>
-    <select class="form-control" id="idUniversite" name="idUniversite" required formControlName="idUniversite">
-      <option *ngFor="let universite of universites" [value]="universite.idUniversite">{{ universite.nomUniversite }}</option>
-    </select>
-  </div>
-  
- 
-  
-
-
-
-  <button type="submit" [disabled]="!FoyerForm.valid || messageAjout">Ajouter</button>
-  <button (click)="onAnnulerClick()" class="float-end">Annuler</button>
-
-</form>
-
-<div class="mt-4 bg-success" *ngIf="messageAjout" [class.message-ajout]="messageAjout.includes('succès')" [class.message-erreur]="messageAjout.includes('Erreur')">
-  {{ messageAjout }}
 </div>
 
-
-
+<app-footer></app-footer>
